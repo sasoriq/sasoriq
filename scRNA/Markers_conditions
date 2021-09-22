@@ -1,0 +1,5 @@
+DefaultAssay(seurat.integrated) <- "RNA"
+
+CTC_1 <- subset(x = seurat.integrated, subset = PTPRC == 0 & EPCAM > 0)
+CTC_2_pre <- subset(seurat.integrated, subset = PTPRC == 0)
+CTC_2 <- subset(CTC_2_pre, subset = CDH1 > 0 | KRT5 > 0 | KRT7 > 0 | KRT8 > 0 | KRT17 > 0 | KRT18 > 0 | KRT19 > 0)
