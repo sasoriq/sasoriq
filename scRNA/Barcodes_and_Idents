@@ -1,0 +1,16 @@
+CTC_2 <- subset(seurat.object, conditions)
+barcodes_CTC <- WhichCells(CTC_2)
+
+# Merge barcodes of subset (but delete duplicates after)
+barcodes3_CHC <- c(barcodes1_CHC, barcodes2_CHC)
+
+# Take out barcodes from csv file
+barcodes <- read.csv("file_with_barcodes.csv", header = F)$V1
+HD <- as.character(barcodes)
+CTC_1_upd <- subset(seurat.object, cells = barcodes)
+
+# Sow all active idents of object
+Idents(seurat.integrated)
+
+# Add / change idents
+Idents(seurat.integrated, cells = barcodes) <- 'CTC'
