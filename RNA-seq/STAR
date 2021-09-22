@@ -1,0 +1,27 @@
+# make indices
+
+cd path/to/files (optional)
+
+STAR \
+--genomeDir /mnt/storage/AnalysisMain/2021.09.13_UDI/star_index/ \
+--runMode genomeGenerate \
+--genomeFastaFiles /mnt/storage/AnalysisMain/2021.09.13_UDI/genome/Rattus_norvegicus.Rnor_6.0.dna.toplevel.fa \
+--sjdbGTFfile /mnt/storage/AnalysisMain/2021.09.13_UDI/annotation/Rattus_norvegicus.Rnor_6.0.104.gtf \
+--sjdbOverhang 76 \
+--runThreadN 8
+
+# Run STAR
+cd /mnt/storage/AnalysisMain/2021.09.13_UDI/raw_data # path to fastq
+
+# loop for many samples
+for fastq in /mnt/storage/AnalysisMain/2021.09.13_UDI/raw_data/*.fastq
+do echo $fastq
+$RUN STAR \
+--genomeDir /mnt/storage/AnalysisMain/2021.09.13_UDI/star_index \
+--runThreadN 6 \
+--readFilesIn $fastq \
+--outFileNamePrefix /mnt/storage/AnalysisMain/2021.09.13_UDI/results/STAR8/$(basename $fastq .fastq) \
+--outSAMtype BAM SortedByCoordinate \
+--outSAMunmapped Within \
+--outSAMattributes Standard
+done
