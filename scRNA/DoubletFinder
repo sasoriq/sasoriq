@@ -1,0 +1,55 @@
+# Need to perform analazying of each sample before integration 
+
+dir <- "path/to/folder_with_3_files"
+seurat_data <- Read10X(dir)
+sample1 <- CreateSeuratObject(counts = seurat_data, project = "sample_ident")
+
+# look how many cells and compare to the table to determine nExp_poi value
+sample1 
+
+## Pre-process Seurat object  -----------------------------------------------------------------------------------
+sample1[["percent.mt"]] <- PercentageFeatureSet(sample1, pattern = "^MT-")
+sample1 <- subset(sample1, subset = nFeature_RNA > 200 & percent.mt < 25)
+sample1 <- NormalizeData(sample1)
+sample1 <- FindVariableFeatures(sample1, selection.method = "vst", nfeatures = 2000)
+sample1 <- ScaleData(sample1)
+sample1 <- RunPCA(sample1)
+ElbowPlot(sample1)
+sample1 <- FindNeighbors(sample1, dims = 1:20)
+sample1 <- FindClusters(sample1, resolution = 0.5)
+sample1 <- RunUMAP(sample1, dims = 1:20)
+
+DimPlot(sample1, reduction="umap")
+
+## pK Identification (no ground-truth) ---------------------------------------------------------------------------------------
+sweep.res.list <- paramSweep_v3(sample1, PCs = 1:20, sct = FALSE)
+sweep.stats <- summarizeSweep(sweep.res.list, GT = FALSE)
+bcmvn <- find.pK(sweep.stats)
+pK=as.numeric(as.character(bcmvn$pK))
+BCmetric=bcmvn$BCmetric
+pK_choose = pK[which(BCmetric %in% max(BCmetric))] 
+par(mar=c(5,4,4,8)+1,cex.main=1.2,font.main=2)
+plot(x = pK, y = BCmetric, pch = 16,type="b",
+     col = "blue",lty=1)
+abline(v=pK_choose,lwd=2,col='red',lty=2)
+title("The BCmvn distributions")
+text(pK_choose,max(BCmetric),as.character(pK_choose),pos = 4,col = "red")
+
+## Homotypic Doublet Proportion Estimate -------------------------------------------------------------------------------------
+annotations <- sample1@meta.data$ClusteringResults
+homotypic.prop <- modelHomotypic(annotations)           ## ex: annotations <- seu_kidney@meta.data$ClusteringResults
+nExp_poi <- round(0.026*nrow(sample1@meta.data))  ## Assuming 2.6% doublet formation rate - tailor for your dataset
+nExp_poi.adj <- round(nExp_poi*(1-homotypic.prop))
+
+## Run DoubletFinder with varying classification stringencies ----------------------------------------------------------------
+sample1 <- doubletFinder_v3(sample1, PCs = 1:20, pN = 0.25, pK = 0.005, nExp = nExp_poi, reuse.pANN = FALSE, sct = FALSE)
+sample1 <- doubletFinder_v3(sample1, PCs = 1:20, pN = 0.25, pK = 0.08, nExp = nExp_poi.adj, reuse.pANN = "pANN_0.25_0.08_57", sct = FALSE)
+
+sample1@meta.data$DF.classifications_0.25_0.005_26
+
+DimPlot(sample1)
+DimPlot(sample1, group.by = "DF.classifications_0.25_0.005_26")
+sample1_clean <- subset(sample1, cells = rownames(sample1@meta.data)[which(sample1@meta.data$DF.classifications == "Singlet")])
+sample1_doubl <- subset(sample1, cells = rownames(sample1@meta.data)[which(sample1@meta.data$DF.classifications == "Doublet")])
+sample1_doubl
+saveRDS(sample1_clean, file = "sample_name.rds")
