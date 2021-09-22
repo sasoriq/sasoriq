@@ -1,0 +1,41 @@
+library(Seurat) 
+
+setwd("D:/matrices/")
+samples <- c("sample1", "sample2", "sample3", "sample4", "sample5", "sample6", "sample7", "sample8", "sample9", "sample10", "sample11", "sample12", "sample13", "sample14", "sample15", "sample16", "sample17", "isaeva", "reneva", "samp1", "samp2")
+for(file in samples){
+  seurat_data <- Read10X(data.dir = paste0(getwd(), "/", file))
+  seurat_obj <- CreateSeuratObject(counts = seurat_data,
+                                   project = file)
+  assign(file, seurat_obj)
+}
+
+data.combined <- merge(sample1, y = c(sample2, sample3, sample4, sample5, sample6, sample7, sample8, sample9, sample10, sample11, sample12, sample13, sample14, sample15, sample16, sample17, isaeva, reneva, samp1, samp2),
+                       add.cell.ids = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "SampI", "SampR", "Samp1", "Samp2"),
+                       project = "combined")
+                       
+data.combined[["percent.mt"]] <- PercentageFeatureSet(data.combined, pattern = "^MT-")
+data.combined <- subset(data.combined, subset = nFeature_RNA > 200)
+
+for (i in 1:length(split_seurat)) {
+  split_seurat[[i]] <- SCTransform(split_seurat[[i]], conserve.memory = TRUE)
+}
+
+seurat.features <- SelectIntegrationFeatures(object.list = split_seurat, 
+                                             nfeatures = 3000)
+split_seurat <- PrepSCTIntegration(object.list = split_seurat, 
+                                   anchor.features = seurat.features)
+seurat.anchors <- FindIntegrationAnchors(object.list = split_seurat, 
+                                         normalization.method = "SCT", 
+                                         anchor.features = seurat.features)
+                                         
+seurat.integrated <- IntegrateData(anchorset = seurat.anchors, 
+                                     normalization.method = "SCT",
+                                     k.weight = $min.amount.of.cells.in.sample)
+                                     
+DefaultAssay(seurat.integrated) <- "integrated"
+
+seurat.integrated <- RunPCA(seurat.integrated)
+seurat.integrated <- RunUMAP(seurat.integrated, dims = 1:30)
+
+seurat.integrated <- FindNeighbors(seurat.integrated, dims = 1:30)
+seurat.integrated <- FindClusters(seurat.integrated)
