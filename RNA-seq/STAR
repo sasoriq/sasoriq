@@ -25,3 +25,5 @@ $RUN STAR \
 --outSAMunmapped Within \
 --outSAMattributes Standard
 done
+
+https://physiology.med.cornell.edu/faculty/skrabanek/lab/angsd/lecture_notes/STARmanual.pdf
