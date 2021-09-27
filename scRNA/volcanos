@@ -1,115 +1,33 @@
-if (!requireNamespace('BiocManager', quietly = TRUE))
-  install.packages('BiocManager')
-install.packages("installr")
-library(installr)
-updateR()
-BiocManager::install('EnhancedVolcano')
 library(EnhancedVolcano)
-X1$PValue
-X1$Log2FoldChange <- as.numeric(X1$Log2FoldChange)
 
-cluster_0$...1
-cluster_0$p_val
-cluster_0$avg_log2FC
-
-mydata <- data.frame(gene = cluster_0$...1,
-                     log2_fold_change = cluster_0$avg_log2FC,
-                     adj_p = cluster_0$p_val) 
-cluster0_$X
-cluster0_ptc0$X
-cluster0$
-mydata <- data.frame(gene = cluster0$X,
-                     log2_fold_change = cluster0$avg_log2FC,
-                     adj_p = cluster0$p_val) 
+mydata <- data.frame(gene = CHC$...1,
+                     log2_fold_change = CHC$avg_log2FC,
+                     adj_p = CHC$p_val) 
 
 EnhancedVolcano(mydata,
-                lab = cluster_0$...1,
+                lab = CHC$...1,
                 x = 'log2_fold_change',
                 y = 'adj_p',
-                selectLab = c('NAPA','SH3BGRL','SKAP2','C17orf49', 'WDR11', 'AL627171.2', 'UBE2D3', 'ZBTB7A', 'CHD4'),
-                pCutoff = 10e-2,
-                FCcutoff = 0.25,
-                #         boxedLabels = TRUE,
-                pointSize = 3.0,
-                col=c('red', 'red', 'red', 'grey'),
+                selectLab = c('HLA-DRA', 'CXCR4', 'ITGA4', 'CXCR3', 'GZMB'),
+                pCutoff = 10e-8,
+                FCcutoff = 1.333,
+                xlim = c(-5.5, 5.5),
+                ylim = c(0, -log10(10e-12)),
+                pointSize = 1.5,
+                labSize = 5,
+                # boxedLabels = TRUE,
+                # pointSize = 3.0,
+                # colCustom=keyvals,
+                colGradient = c('red3', 'grey30'),
+                colGradientBreaks = c(pCutoff, 1),
+                colGradientLimits = c(0, 0.7),
                 colAlpha = 1,
                 drawConnectors = TRUE,
-                widthConnectors = 0.75,
-                labSize = 5.0,
+                widthConnectors = 1,
+                #    labSize = 5.0,
+                hline = NULL,
                 labCol = 'black',
-                labFace = 'bold',
-                boxedLabels = TRUE)
-
-?EnhancedVolcano
-
-
-mydata <- data.frame(gene = CTC$FeatureName,
-                     log2_fold_change = CTC$`Cluster 2 Log2 Fold Change`,
-                     adj_p = CTC$`Cluster 2 P-Value`) 
-
-EnhancedVolcano(mydata,
-                lab = CTC$FeatureName,
-                x = 'log2_fold_change',
-                y = 'adj_p',
-                selectLab = c('POSTN','COL3A1','HSPG2','CLDN10', 'AATK', 'STX11'),
-                pCutoff = 10e-2,
-                FCcutoff = 0.5,
-                #         boxedLabels = TRUE,
-                pointSize = 3.0,
-                col=c('red', 'red', 'red', 'grey'),
-                colAlpha = 1,
-                drawConnectors = TRUE,
-                widthConnectors = 0.75,
-                labSize = 5.0,
-                labCol = 'black',
-                labFace = 'bold')
-         #       boxedLabels = TRUE)
-
-
-mydata <- data.frame(gene = CHC$FeatureName,
-                     log2_fold_change = CHC$`Cluster 3 Log2 Fold Change`,
-                     adj_p = CHC$`Cluster 3 P-Value`) 
-
-EnhancedVolcano(mydata,
-                lab = CHC$FeatureName,
-                x = 'log2_fold_change',
-                y = 'adj_p',
-                selectLab = c('LRP12','PDE3A','THBS1','CEBPD', 'EGR1'),
-                pCutoff = 10e-2,
-                FCcutoff = 0.5,
-                #         boxedLabels = TRUE,
-                pointSize = 3.0,
-                col=c('red', 'red', 'red', 'grey'),
-                colAlpha = 1,
-                drawConnectors = TRUE,
-                widthConnectors = 0.75,
-                labSize = 5.0,
-                labCol = 'black',
-                labFace = 'bold',
-       boxedLabels = TRUE)
-
-
-
-mydata <- data.frame(gene = cluster_3$...1,
-                     log2_fold_change = cluster_3$avg_log2FC,
-                     adj_p = cluster_3$p_val) 
-
-
-EnhancedVolcano(mydata,
-                lab = cluster_3$...1,
-                x = 'log2_fold_change',
-                y = 'adj_p',
-                selectLab = c('YWHAZ','PRKCB','ITPR2','KRAS', 'CDC42', 'HLA-C', 'BID'),
-                pCutoff = 10e-2,
-                FCcutoff = 0.25,
-                #         boxedLabels = TRUE,
-                pointSize = 3.0,
-                col=c('red', 'red', 'red', 'grey'),
-                colAlpha = 1,
-                drawConnectors = TRUE,
-                widthConnectors = 0.75,
-                labSize = 5.0,
-                labCol = 'black',
-                labFace = 'bold',
-                boxedLabels = TRUE)
-
+                hlineType = 'blank',
+                cutoffLineType = 'blank'
+                #    labFace = 'bold',
+)
