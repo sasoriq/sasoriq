@@ -1,0 +1,37 @@
+#########BCL2FASTQ#########
+
+bcl2fastq \
+--create-fastq-for-index-reads \
+--minimum-trimmed-read-length=8 \
+--mask-short-adapter-reads=8 \
+--ignore-missing-positions \
+--ignore-missing-controls \
+--ignore-missing-filter \
+--ignore-missing-bcls \
+-r 6 -w 6 \
+--runfolder-dir . \
+--output-dir /mnt/storage/AnalysisMain/2021-09-28_SingleCell/Data/Intensities/BaseCalls \
+--interop-dir /mnt/storage/AnalysisMain/2021-09-28_SingleCell/InterOp \
+--input-dir /mnt/storage/AnalysisMain/2021-09-28_SingleCell/Data/Intensities/BaseCalls \
+--sample-sheet /mnt/storage/AnalysisMain/2021-09-28_SingleCell/samleShit.csv
+
+Протокол: https://support.illumina.com/content/dam/illumina-support/documents/documentation/software_documentation/bcl2fastq/bcl2fastq2-v2-20-software-guide-15051736-03.pdf
+
+##########COUNT#############
+
+cellranger count --id=Chromium_20210923_2sample \
+--transcriptome=/home/vikotoed/mnt/run_cellranger_count/reference/refdata-gex-GRCh38-2020-A \
+--fastqs=/mnt/storage/AnalysisMain/2021-09-28_SingleCell/Data/Intensities/BaseCalls/Chromium_20210923/SI-GA-B5_1,/mnt/storage/AnalysisMain/2021-09-28_SingleCell/Data/Intensities/BaseCalls/Chromium_20210923/SI-GA-B5_2,/mnt/storage/AnalysisMain/2021-09-28_SingleCell/Data/Intensities/BaseCalls/Chromium_20210923/SI-GA-B5_3,/mnt/storage/AnalysisMain/2021-09-28_SingleCell/Data/Intensities/BaseCalls/Chromium_20210923/SI-GA-B5_4 \
+--sample=2S
+
+id - Название папки, в которой будет аутпут
+sample - название сэмпла
+для аггрегейта нужно несколько раз запустить каунт, а потом каждый каунт соединить через csv файл 
+
+
+#########AGGREGATE###########
+cellranger aggr --id=MySamples --csv=aggr.csv
+
+
+
+
