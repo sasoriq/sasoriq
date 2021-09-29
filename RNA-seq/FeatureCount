@@ -1,0 +1,14 @@
+sudo apt install subread
+cd ~/shared/store
+mkdir feature_counts
+cp ~/shared/store/{CrEnegAligned_sorted.bam,CrEposAligned_sorted.bam} ~/shared/store/feature_counts
+cp ~/shared/store/{BrEnegAligned_sorted.bam,BrEposAligned_sorted.bam} ~/shared/store/feature_counts
+cp ~/shared/store/{DrEnegAligned_sorted.bam,DrEposAligned_sorted.bam} ~/shared/store/feature_counts
+
+(Это для одного рида unstranded)
+featureCounts -T 12 -s 0 \
+  -a /mnt/storage/AnalysisMain/2021.09.13_UDI/annotation/Rattus_norvegicus.Rnor_6.0.104.gtf \
+  -o /mnt/storage/AnalysisMain/2021.09.13_UDI/results/feature_counts/UDI_featurecounts_2.txt \
+  /mnt/storage/AnalysisMain/2021.09.13_UDI/results/STAR10/*.out.bam
+  
+cut -f1,7,8,9,10,11,12 /mnt/storage/AnalysisMain/2021.09.13_UDI/results/feature_counts/UDI_featurecounts_2.txt > /mnt/storage/AnalysisMain/2021.09.13_UDI/results/feature_counts/UDI_featurecounts_2.Rmatrix.txt
