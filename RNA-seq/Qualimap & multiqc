@@ -1,0 +1,8 @@
+qualimap rnaseq -bam /mnt/storage/AnalysisMain/2021.09.13_UDI/results/STAR10/UDI-P_12Aligned.sortedByCoord.out.bam \
+-gtf /mnt/storage/AnalysisMain/2021.09.13_UDI/annotation/Rattus_norvegicus.Rnor_6.0.104.gtf \
+-outdir qc_qualimap \
+-p non-strand-specific
+
+multiqc -n multiqc_report_rnaseq \
+/mnt/storage/AnalysisMain/2021.09.13_UDI/results/fastqc/*.zip \
+/mnt/storage/AnalysisMain/2021.09.13_UDI/results/STAR10/*Log.final.out
