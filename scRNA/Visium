@@ -1,0 +1,64 @@
+spaceranger mkfastq --id=Visium_2run \
+                     --run=/mnt/storage/AnalysisMain/ \
+                     --csv=/mnt/storage/AnalysisMain/_/bcl_run2.csv
+                     
+378-A1
+
+spaceranger count --id=sample1_all_lanes \
+                   --transcriptome=/home/vikotoed/mnt/run_cellranger_count/reference/refdata-gex-GRCh38-2020-A \
+                   --probe-set=/home/vikotoed/opt/spaceranger-1.3.1/external/tenx_targeted_panels/Visium_Human_Transcriptome_Probe_Set_v1.0_GRCh38-2020-A.csv \
+                   --fastqs=/mnt/storage/AnalysisMain/_/analysis/all_fastq \
+                   --sample=sample1 \
+                   --image=/mnt/storage/AnalysisMain/_/Images/V11Y17-378_A1.tiff \
+                   --slide=V11Y17-378 \
+                   --area=A1 \
+                   --localcores=8 \
+                   --localmem=64
+       378-B1
+            
+spaceranger count --id=sample2_all_lanes \
+                   --transcriptome=/home/vikotoed/mnt/run_cellranger_count/reference/refdata-gex-GRCh38-2020-A \
+                   --probe-set=/home/vikotoed/opt/spaceranger-1.3.1/external/tenx_targeted_panels/Visium_Human_Transcriptome_Probe_Set_v1.0_GRCh38-2020-A.csv \
+                   --fastqs=/mnt/storage/AnalysisMain/_/analysis/all_fastq \
+                   --sample=sample2 \
+                   --image=/mnt/storage/AnalysisMain/_/Images/V11Y17-378_B1.tiff \
+                   --slide=V11Y17-378 \
+                   --area=B1 \
+                   --localcores=8 \
+                   --localmem=64
+               376-C1
+    
+spaceranger count --id=sample3_all_lanes \
+                   --transcriptome=/home/vikotoed/mnt/run_cellranger_count/reference/refdata-gex-GRCh38-2020-A \
+                   --probe-set=/home/vikotoed/opt/spaceranger-1.3.1/external/tenx_targeted_panels/Visium_Human_Transcriptome_Probe_Set_v1.0_GRCh38-2020-A.csv \
+                   --fastqs=/mnt/storage/AnalysisMain/_/analysis/all_fastq \
+                   --sample=sample3 \
+                   --image=/mnt/storage/AnalysisMain/_/Images/V11Y17-376_C1.tiff \
+                   --slide=V11Y17-376 \
+                   --area=C1 \
+                   --localcores=8 \
+                   --localmem=64
+    375-A1
+               
+spaceranger count --id=sample4_all_lanes \
+                   --transcriptome=/home/vikotoed/mnt/run_cellranger_count/reference/refdata-gex-GRCh38-2020-A \
+                   --probe-set=/home/vikotoed/opt/spaceranger-1.3.1/external/tenx_targeted_panels/Visium_Human_Transcriptome_Probe_Set_v1.0_GRCh38-2020-A.csv \
+                   --fastqs=/mnt/storage/AnalysisMain/_/analysis/all_fastq \
+                   --sample=sample4 \
+                   --image=/mnt/storage/AnalysisMain/_/Images/V11Y17-375_A1.tiff \
+                   --slide=V11Y17-375 \
+                   --area=A1 \
+                   --localcores=8 \
+                   --localmem=64
+     375-B1
+              
+spaceranger count --id=sample5_all_lanes \
+                   --transcriptome=/home/vikotoed/mnt/run_cellranger_count/reference/refdata-gex-GRCh38-2020-A \
+                   --probe-set=/home/vikotoed/opt/spaceranger-1.3.1/external/tenx_targeted_panels/Visium_Human_Transcriptome_Probe_Set_v1.0_GRCh38-2020-A.csv \
+                   --fastqs=/mnt/storage/AnalysisMain/_/analysis/all_fastq \
+                   --sample=sample5 \
+                   --image=/mnt/storage/AnalysisMain/_/Images/V11Y17-375_B1.tiff \
+                   --slide=V11Y17-375 \
+                   --area=B1 \
+                   --localcores=8 \
+                   --localmem=64
