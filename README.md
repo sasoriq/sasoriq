@@ -1,7 +1,4 @@
 - 👋 Hi, I’m @sasoriq
-- 👀 I’m interested in bioinformatics
-- 🌱 I’m currently learning scRNA-seq and RNA-seq
-- 💞️ I’m looking to collaborate on things described above :)
 - 📫 How to reach me vikotoed@gmail.com
 
 <!---
